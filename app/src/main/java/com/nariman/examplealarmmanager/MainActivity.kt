@@ -29,7 +29,11 @@ class MainActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener {
     }
 
     fun cancelAlarm(view: View) {
-
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        alarmManager.cancel(pendingIntent)
+        alarm_time_text.text = getString(R.string.time_dosent_set)
     }
 
     override fun onTimeSet(timePicker: TimePicker?, hour: Int, minute: Int) {
